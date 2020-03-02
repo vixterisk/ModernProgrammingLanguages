@@ -216,25 +216,6 @@ namespace SetLab
 
     class Program
     {
-        public static int findMax(string[] str)
-        {
-            int max = 0;
-            string pattern = @"(\,)";
-            foreach (var word in str)
-            {
-                try
-                {
-                    if (Int32.Parse(Regex.Replace(word, pattern, String.Empty)) > max)
-                        max = Int32.Parse(word);
-                }
-                catch
-                {
-                    return -1;
-                }
-            }
-            return max;
-        }
-
         static void Main(string[] args)
         {
             Set set; string input = ""; int limit = 0; int[] intArrayFromFile = new int[0];
@@ -266,7 +247,6 @@ namespace SetLab
                     while (!Int32.TryParse(Console.ReadLine(), out limit));
                     Console.WriteLine("Введите элементы множества: ");
                     input = Console.ReadLine();
-                    limit = findMax(input.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries));
                 } while (limit <= 0);
             if (type.ToLower() == "l") set = new SimpleSet(limit);
             else if (type.ToLower() == "b") set = new BitSet(limit);
@@ -344,9 +324,11 @@ namespace SetLab
                     Set secondSet;
                     do
                     {
+                        do
+                            Console.WriteLine("Введите максимум второго множества: ");
+                        while (!Int32.TryParse(Console.ReadLine(), out limit));
                         Console.WriteLine("Введите второе множество: ");
                         input = Console.ReadLine();
-                        limit = findMax(input.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries));
                     } while (limit <= 0);
                     if (type == "L" || type == "l") secondSet = new SimpleSet(limit);
                     else if (type == "B" || type == "b") secondSet = new BitSet(limit);
